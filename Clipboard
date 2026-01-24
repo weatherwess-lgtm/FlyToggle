@@ -1,0 +1,75 @@
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "DiscordNotification"
+ScreenGui.Parent = PlayerGui
+
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 280, 0, 50)
+Frame.Position = UDim2.new(0.5, -140, 0, -60) -- Above screen
+Frame.BackgroundColor3 = Color3.fromRGB(35, 39, 42) -- Discord dark
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 8)
+Corner.Parent = Frame
+
+local Shadow = Instance.new("ImageLabel")
+Shadow.Name = "Shadow"
+Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+Shadow.BackgroundTransparency = 1
+Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+Shadow.Size = UDim2.new(1, 40, 1, 40)
+Shadow.Image = "rbxassetid://6015897843"
+Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.ImageTransparency = 0.5
+Shadow.Parent = Frame
+
+local Icon = Instance.new("ImageLabel")
+Icon.Size = UDim2.new(0, 24, 0, 24)
+Icon.Position = UDim2.new(0, 15, 0.5, -12)
+Icon.BackgroundTransparency = 1
+Icon.Image = "rbxassetid://7072718362" -- Link/clipboard icon
+Icon.ImageColor3 = Color3.fromRGB(88, 101, 242) -- Discord blurple
+Icon.Parent = Frame
+
+local Text = Instance.new("TextLabel")
+Text.Size = UDim2.new(1, -50, 1, 0)
+Text.Position = UDim2.new(0, 45, 0, 0)
+Text.BackgroundTransparency = 1
+Text.Text = "Discord set to clipboard"
+Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+Text.TextSize = 16
+Text.Font = Enum.Font.GothamSemibold
+Text.TextXAlignment = Enum.TextXAlignment.Left
+Text.Parent = Frame
+
+local Checkmark = Instance.new("TextLabel")
+Checkmark.Size = UDim2.new(0, 20, 0, 20)
+Checkmark.Position = UDim2.new(1, -25, 0.5, -10)
+Checkmark.BackgroundTransparency = 1
+Checkmark.Text = "✓"
+Checkmark.TextColor3 = Color3.fromRGB(87, 242, 135)
+Checkmark.TextSize = 18
+Checkmark.Font = Enum.Font.GothamBold
+Checkmark.Parent = Frame
+
+local dropTween = TweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+    Position = UDim2.new(0.5, -140, 0, 20) -- Final position at top
+})
+dropTween:Play()
+
+task.wait(3)
+
+local upTween = TweenService:Create(Frame, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+    Position = UDim2.new(0.5, -140, 0, -60) -- Back up
+})
+upTween:Play()
+
+upTween.Completed:Connect(function()
+    ScreenGui:Destroy()
+end)
